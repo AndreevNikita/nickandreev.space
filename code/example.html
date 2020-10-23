@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WebGL</title>
+	<meta charset="utf-8" />
+	<script id="fragmentShader" type="x-shader/x-fragment">
+		precision highp float;
+		uniform float u_scale;
+		uniform vec2 u_shift;
+		uniform vec2 u_resolution;
+		
+		vec4 bgColor		= vec4(0.3, 0.3, 0.3, 1.0);
+		vec4 lightLineColor = vec4(0.6, 0.6, 0.6, 1.0);
+		vec4 darkLineColor	= vec4(0.4, 0.4, 0.4, 1.0);
+		
+		bool checkIn(float a, float x, float b) {
+		return (a <= x) && (x <= b);
+		}
+	
+		void main(void) {
+		vec2 centerCoord = vec2(gl_FragCoord.x, gl_FragCoord.y) - u_resolution / 2.0;
+		vec2 shiftedCoord = centerCoord - u_shift;
+		if(checkIn(0.0, shiftedCoord.x, 1.0)) {
+			gl_FragColor = vec4(0.0, 0.6, 0.0, 1.0);
+			return;
+		}
+		
+		if(checkIn(0.0, shiftedCoord.y, 1.0)) {
+			gl_FragColor = vec4(0.6, 0.0, 0.0, 1.0);
+			return;
+		}
+		
+		float oneMeterPixels = u_resolution.y / 2.0 * u_scale;
+		
+		float currentPower = log(u_scale) / log(10.0);
+		float power1 = floor(currentPower);
+		float power2 = power1 + 1.0;
+		float div2 = pow(10.0, power2 + 1.0);
+		float div1 = pow(10.0, power1 + 1.0);
+		float nextPowerDif = 1.0 - (power1 + 1.0 - currentPower);
+		
+		
+		if(mod(shiftedCoord.x, oneMeterPixels / div2) < 1.0 || mod(shiftedCoord.y, oneMeterPixels / div2) < 1.0) {
+			if(mod(shiftedCoord.x, oneMeterPixels / div1) < 1.0 || mod(shiftedCoord.y, oneMeterPixels / div1) < 1.0) {
+				gl_FragColor = mix(lightLineColor, darkLineColor, 1.0 - nextPowerDif);
+			} else {
+				gl_FragColor = mix(darkLineColor, bgColor, 1.0 - nextPowerDif);
+			}
+		} else {
+			gl_FragColor = bgColor;
+		}
+		}
+	</script>
+	<script id="vertexShader" type="x-shader/x-vertex">
+		precision highp float;
+		attribute vec3 a_vertex;
+		
+		
+		void main(void) {
+			gl_Position = vec4(a_vertex, 1.0);
+		}
+	</script>
+	
+	<script type="text/javascript">
+	function getShader(type,id) {
+		var source = document.getElementById(id).innerHTML;
+		var shader = gl.createShader(type);
+		gl.shaderSource(shader, source);
+		gl.compileShader(shader);
+		 
+		if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+			alert("Ошибка компиляции шейдера: " + gl.getShaderInfoLog(shader));
+			gl.deleteShader(shader);	 
+			return null;
+		}
+		return shader;	
+	}
+
+	var gl;
+	var shaderProgram;
+	var vertexBuffer;
+	var indexBuffer;
+	function initShaders() {
+		var fragmentShader = getShader(gl.FRAGMENT_SHADER, 'fragmentShader');
+		var vertexShader = getShader(gl.VERTEX_SHADER, 'vertexShader');
+		 
+		shaderProgram = gl.createProgram();
+		 
+		gl.attachShader(shaderProgram, vertexShader);
+		gl.attachShader(shaderProgram, fragmentShader);
+		 
+		gl.linkProgram(shaderProgram);
+			
+		if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+			alert("Не удалось установить шейдеры");
+		}
+		gl.useProgram(shaderProgram);
+		
+		shaderProgram.a_vertex = gl.getAttribLocation(shaderProgram, "a_vertex");
+		shaderProgram.u_shift = gl.getUniformLocation(shaderProgram, "u_shift");
+		shaderProgram.u_resolution = gl.getUniformLocation(shaderProgram, "u_resolution");
+		shaderProgram.u_scale = gl.getUniformLocation(shaderProgram, "u_scale");
+		
+		gl.enableVertexAttribArray(shaderProgram.a_vertex);
+	}
+	
+	function initBuffers() {
+	 
+		vertices =[	1.0,	1.0, 0.0,
+					-1.0,	1.0, 0.0,
+					-1.0, -1.0, 0.0, 
+					 1.0, -1.0, 0.0];
+	 
+		indices = [0, 1, 2, 0, 2, 3];
+	 
+		vertexBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+		vertexBuffer.itemSize = 3;
+		 
+		indexBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+		indexBuffer.numberOfItems = indices.length;
+	}
+		
+	function draw() {		
+		gl.clearColor(0.0, 0.0, 0.0, 1.0);
+		gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+		gl.clear(gl.COLOR_BUFFER_BIT);
+		gl.vertexAttribPointer(shaderProgram.a_vertex, 
+							 vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+		gl.drawElements(gl.TRIANGLES, indexBuffer.numberOfItems, gl.UNSIGNED_SHORT,0);
+		
+		gl.uniform2f(shaderProgram.u_resolution, canvas.width, canvas.height);
+		gl.uniform2f(shaderProgram.u_shift, shift.x, shift.y);
+		gl.uniform1f(shaderProgram.u_scale, scale);
+		
+		window.requestAnimationFrame(function(currentTime) {
+			draw();
+		});
+	}
+	 var canvas;
+	 var infoDiv;
+	 var shift = {x: 0, y: 0};
+	 var downShift = {x: 0, y: 0};
+	 var drag = false;
+	 var downpos = {x: 0, y: 0};
+	 var scale = 1.0 / 2.5;
+	 const scrollScaleMultiplier = 1.0 / 1.1;
+	 
+	 function updateInfo() {
+		infoDiv.innerHTML = "(" + shift.x + "; " + shift.y + ")" + "<br>scale: " + scale;
+	 }
+	function onUp() {
+		drag = false;
+		updateInfo();
+	}
+	 
+	function onMove() {
+		if(drag) {
+			shift.x = event.clientX - downpos.x + downShift.x;
+			shift.y = -(event.clientY - downpos.y) + downShift.y;
+			updateInfo();
+		}
+	}
+	
+	function onDown() {
+		drag = true;
+		downpos.x = event.clientX;
+		downpos.y = event.clientY;
+		downShift.x = shift.x; downShift.y = shift.y;
+		
+	}
+	 
+	window.onload=function(){
+	 
+		canvas = document.getElementById("canvas3D");
+		infoDiv = document.getElementById("info-div");
+		updateInfo();
+		document,addEventListener("wheel", function(e) {
+			if(e.deltaY < 0) {
+				scale /= scrollScaleMultiplier;
+			} else {
+				scale *= scrollScaleMultiplier;
+			}
+			updateInfo();
+		});
+	
+		document.addEventListener('mousedown', onDown);
+		canvas.addEventListener('mousemove', onMove);
+		document.addEventListener('mouseup', onUp);
+		
+		try {
+			gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+		}
+		catch(e) {}
+		 
+		if (!gl) {
+			alert("Ваш браузер не поддерживает WebGL");
+			return;
+		}
+		
+		gl.viewportWidth = canvas.width;
+		gl.viewportHeight = canvas.height;
+		 
+		initShaders();
+		 
+		initBuffers();
+		 
+		draw();	
+	}
+	</script>
+	<link rel="stylesheet" href="https://nickandreev.space/fonts/fonts.css">
+	<link rel="stylesheet" href="https://nickandreev.space/css/Base.css">
+	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+	
+		#page-content {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+		
+		#page-content>*:first-child {
+			flex-grow: 1;
+			width: 100%;
+		}
+		
+		#page-content>*:last-child {
+			flex-grow: 1;
+			width: 100%;
+		}
+		
+		#info-div {
+			margin: 20px;
+			text-align: center;
+		}
+		
+		#me-info {
+			position: absolute;
+			margin: 20px;
+			font-family: "Montserrat";
+			font-weight: 6px;
+			color: #333333;
+			transition: all 0.3s ease-out;
+		}
+
+		#me-info:hover {
+			color: #54d1ff;
+		}
+		
+	</style>
+	
+</head>
+<body>
+	<div id = "me-info"><a href = "https://nickandreev.space" target = "_blank">Обо мне</a></div>
+	<div id = "page-content">
+		<div></div>
+		<canvas id="canvas3D" width="513px" height="513px">Ваш браузер не поддерживает элемент canvas</canvas>
+		<div id = "info-div"></div>
+	</div>
+	
+</body>
+</html>

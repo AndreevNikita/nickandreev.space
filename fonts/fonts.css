@@ -1,0 +1,24 @@
+@font-face {
+	font-family: "Roboto Mono";
+	src: url("RobotoMono-Regular.ttf");
+}
+
+@font-face {
+	font-family: "Montserrat";
+	src: url("Montserrat-Regular.ttf");
+}
+
+@font-face {
+	font-family: "Helvetica Neue";
+	src: url("HelveticaNeue.ttf");
+}
+
+@font-face {
+	font-family: "Helvetica";
+	src: url("Helvetica.otf");
+}
+
+@font-face {
+	font-family: "Roboto";
+	src: url("Roboto-Regular.ttf");
+}

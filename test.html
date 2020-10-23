@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			#grid-div {
+				width: 100%;
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				grid-gap: 20px;
+			}
+
+			#grid-div > div {
+				height: 200px;
+			}
+
+			#element-1 {
+				background: #aaffaa;
+				grid-column: 1/3;
+				grid-row: 1;
+				opacity: 0.5;
+			}
+
+			#element-2 {
+				background: #aaaaff;
+				grid-column: 2/4;
+				grid-row: 1;
+				opacity: 0.5;
+			}
+
+				.icon-bike {
+  -webkit-mask: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/icon-bike-black.svg);
+}
+.icon-bell {
+  -webkit-mask: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/icon-bell-black.svg);
+}
+.icon-arrow {
+  -webkit-mask: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/icon-arrow-black.svg);
+}
+.icon {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  background: black;
+  -webkit-mask-size: cover;
+}
+.icon:hover,
+.icon:focus {
+  background: red;
+}
+
+
+
+
+
+body {
+  display: grid;
+  height: 100vh;
+  margin: 0;
+  place-items: center center;
+}
+
+
+		</style>
+	</head>
+	<body>
+		<div>
+  
+		  <span class="icon icon-bike"></span>
+		  <span class="icon icon-bell"></span>
+		  <span class="icon icon-arrow"></span>
+		  
+		</div>
+	</body>
+</html>

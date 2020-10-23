@@ -1,0 +1,20 @@
+.svg-mask {
+	mask: var(--svg-url);
+	-webkit-mask: var(--svg-url);
+	-moz-mask: var(--svg-url);
+	-o-mask: var(--svg-url);
+	-khtml-mask: var(--svg-url);
+	-ms-mask: var(--svg-url);
+}
+
+.svg-photo {
+	--svg-url: url("../img/photo.svg");
+}
+
+.svg-code {
+	--svg-url: url("../img/code.svg");
+}
+
+.svg-close {
+	--svg-url: url("../img/close.svg");
+}

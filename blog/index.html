@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Andreev's | Code</title>
+		<script src = "/js/parts.js"></script>
+		<script>
+			PartsLoader.recursiveBack("theme-part.html");
+			PartsLoader.extOnBuild(function() {
+				document.getElementById("theme-div").innerHTML = "Blog";
+			});
+		</script>
+		
+		<link data-part-uid = "logo-style" rel="stylesheet" type="text/css" href="Blog.css">
+	</head>
+	<body>
+		<div class = "page-part-orig page-part-rec foo" data-part-ext = "ref" hidden>
+			<div class = "note">
+				<div class = "header">Привет!<br>И добро пожаловать на мою страничку в сети интернет</div>
+				<div class = "text">
+					Всё чаще я начал попадать в ситуацию, когда меня просят скинуть примеры работ. 
+					И вот, я начинаю копаться на жёстком диске и искать фотки или программы и алгоритмы 
+					или листаю диалоги ВКонтакте с пояснением того или иного вопроса.
+					<br>
+					Поэтому я решил собирать полезные знания и материалы централизованно в одном месте. Мой сайт ещё в процессе доработки, 
+					однако позже тут будет много интересного, заходите ;)
+					<br><br><br>
+					<div style = "width: 100%; text-align: center;">
+					<img class = "illustration"src = "img/1.jpg"></img>
+					</div>
+					<!--br>
+					<a href = "https://github.com/AndreevNikita/MinimalPolynomial">Программа поиска минимального полинома на языке C#</a><br-->
+				</div>
+			</div>
+		</div>
+		<div class = "page-part-ref page-part-rec"></div>
+	</body>
+</html>

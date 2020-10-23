@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Andreev's | Code</title>
+		<script src = "/js/parts.js"></script>
+		<script>
+			PartsLoader.recursiveBack("theme-part.html");
+			PartsLoader.extOnBuild(function() {
+				document.getElementById("theme-div").innerHTML = "Code";
+			});
+			//PartsLoader.loadModule("/themes-template.html");
+		</script>
+		
+		<link data-part-uid = "logo-style" rel="stylesheet" type="text/css" href="/code/Code.css">
+	</head>
+	<body>
+		<div class = "page-part-orig page-part-rec foo" data-part-ext = "ref" hidden>
+			<div class = "foo">В этом разделе будет софт</div>
+		</div>
+		<div class = "page-part-ref page-part-rec"></div>
+	</body>
+</html>

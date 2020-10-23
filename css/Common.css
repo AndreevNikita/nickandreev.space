@@ -1,0 +1,71 @@
+:root {
+	--nav-bar-height: 50px;
+}
+
+#page-wrapper {
+	width: 100%;
+}
+
+#navigation-bar {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height: var(--nav-bar-height);
+	box-shadow: 1px 0px 1px 0px;
+	white-space: nowrap;
+}
+
+#navigation-bar .logo {
+	--logo-font-size: 20px;
+	color: #999999;
+	margin-top: 2px;
+	font: var(--logo-font-size) "Roboto";
+}
+
+#navigation-bar .logo > .divisor {
+	display: inline-block;
+	width: 5px;
+	height: var(--logo-font-size);
+	margin: 0px 7px;
+	margin-bottom: -2px;
+	
+	/*background: gray;*/
+}
+
+#navigation-bar .nav-item {
+	padding: 5px;
+}
+
+#navigation-bar > *:first-child {
+	margin-left: 15px;
+}
+
+.page-content {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-start;
+	height: 100%;
+}
+
+.page-content > .left-bar {
+	flex-grow: 1;
+}
+
+.page-content > .central-bar {
+	width: 50%;
+	height: 100%;
+}
+
+.page-content > .right-bar {
+	flex-grow: 1;
+}
+
+.foo {
+	margin-top: 50px;
+	font-family: "Roboto";
+	font-size: 30px;
+	color: #999999;
+	text-align: center;
+}

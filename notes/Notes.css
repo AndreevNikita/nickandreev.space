@@ -1,0 +1,18 @@
+.note {
+	width: 100%;
+	font-family: "Roboto";
+	margin-top: 40px;
+}
+
+.note > .header {
+	font-size: 30px;
+	margin-bottom: 20px;
+}
+
+.note > .text {
+	font-size: 25px;
+}
+
+.note a {
+	color: #78d5fa;
+}

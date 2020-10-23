@@ -1,0 +1,30 @@
+.logo > .divisor {
+	background: #03b1fc;
+}
+
+.note {
+	width: 100%;
+	font-family: "Roboto";
+	margin-top: 40px;
+}
+
+.note > .header {
+	font-size: 30px;
+	margin-bottom: 30px;
+}
+
+.note > .text {
+	font-size: 25px;
+	color: #222222;
+}
+
+.note a {
+	color: #78d5fa;
+}
+
+.note .illustration {
+	max-width: 1024px;
+	width: 75%;
+	min-width: 400px;
+	border-radius: 2px;
+}

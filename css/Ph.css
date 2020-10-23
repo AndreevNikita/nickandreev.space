@@ -1,0 +1,196 @@
+:root {
+	--nav-bar-height: 50px;
+}
+
+#page-wrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+/*--------------------------------Top navigation bar--------------------------------*/
+
+#navigation-bar {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height: var(--nav-bar-height);
+	box-shadow: 1px 0px 1px 0px;
+	white-space: nowrap;
+	position: fixed;
+	z-index: 1;
+	background-color: rgba(255, 255, 255, 0.98);
+}
+
+#navigation-bar .logo {
+	--logo-font-size: 20px;
+	color: #999999;
+	font: var(--logo-font-size) "Roboto";
+}
+
+#navigation-bar .logo > .divisor {
+	display: inline-block;
+	width: 5px;
+	height: var(--logo-font-size);
+	margin: 0px 7px;
+	margin-bottom: -2px;
+	/*background: gray;*/
+}
+
+#navigation-bar .right-refs {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+#navigation-bar .right-refs .nav-item {
+	margin: 5px;
+	padding: 5px;
+	font: 15px "Roboto";
+	color: #999999;
+}
+
+#navigation-bar .right-refs .nav-item:last-child {
+	margin-right: 40px;
+}
+
+#navigation-bar > *:first-child {
+	margin-left: 15px;
+}
+
+/*--------------------------------Content--------------------------------*/
+
+.page-content {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-start;
+	height: 100%;
+	
+	padding-top: var(--nav-bar-height);
+}
+
+.page-content > * {
+}
+
+.page-content > .left-bar {
+	flex-grow: 1.618;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.page-content > .left-bar > .align {
+	width: 50%;
+	min-width: 150px;
+}
+
+.page-content > .central-bar {
+	--central-bar-width: 60%;
+	width: var(--central-bar-width);
+	display: flex;
+	flex-direction: row;
+}
+
+.page-content > .right-bar {
+	flex-grow: 1;
+}
+
+
+/*--------------------------------Photos nav bar--------------------------------*/
+
+#photo-area {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#photos-navigation-bar {
+	display: flex;
+	position: fixed;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: flex-start;
+	font-size: 27px;
+	top: 17%;
+	margin-right: 5%;
+}
+
+#photos-navigation-bar .nav-item {
+	margin: 2px;
+	padding: 3px;
+	color: #999999;
+	cursor: pointer;
+	
+	font-family: "Roboto";
+	font-size: 1em;
+	transition: all 0.3s ease-out;
+}
+
+#photos-navigation-bar .nav-item:hover {
+	font-size: 1.1em;
+	color: #54d1ff;
+}
+
+#copyright-wrapper {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+#copyright {
+	position: fixed;
+	top: 90%;
+	color: #aaaaaa;
+	font-family: "Roboto";
+	font-size: 14px;
+	text-align: center;
+	margin-left: 15px;
+}
+
+
+#photo-container {
+	width: 80%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 5px;
+	
+	
+}
+
+@media screen and (max-width: 640px) {
+	#photo-container {
+		grid-template-columns: 1fr;
+	}
+	
+}
+
+/*--------------------------------Photo--------------------------------*/
+
+.photo {
+	background-size: contain;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+.photo > .aspect-ratio-saver {
+	padding-top: calc(2/3 * 100%);
+}
+
+.foo {
+	margin-top: 50px;
+	font-family: "Roboto";
+	font-size: 30px;
+	color: #999999;
+	text-align: center;
+}
+
+.footer {
+	position: relative;
+	height: 10vh;
+	max-height: 50px;
+}
